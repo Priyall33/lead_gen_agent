@@ -23,28 +23,26 @@ The goal is to reduce manual research time and give sales teams a ready-to-use l
 
 The system follows a **sequential multi-agent pipeline** with 4 steps:
 
+Here's an improved version:
 
-User Input (ICP)
-      ↓
-Step 1: Search Agent
-  → Uses Tavily API to search the web for companies matching the ICP
-  → Runs 3+ targeted searches
-      ↓
-Step 2: Extractor Agent
-  → Scrapes the most promising company pages using BeautifulSoup
-  → Extracts company name, website, and decision-maker details
-      ↓
-Step 3: Scorer Chain
-  → Scores each lead 1-10 against the ICP using structured LLM output
-  → Uses Pydantic model to enforce structured data (Lead object)
-      ↓
-Step 4: Email Chain
-  → Writes personalized cold emails for leads scoring 7 or above
-      ↓
-Output: leads_output.csv
+---
 
+The pipeline runs sequentially — each step feeds its output directly into the next via a shared `state` dictionary, so nothing gets lost between steps.
 
-Each step passes its results to the next via a shared state dictionary, similar to LangGraph's state management pattern.
+**Step 1 — Search Agent**
+Takes the ICP and generates targeted search queries. Uses the Tavily API to run 3+ searches and return real company results with titles, URLs, and snippets. The agent decides what to search for and when it has enough results.
+
+**Step 2 — Extractor Agent**
+Takes the search results from Step 1, picks the most promising URLs, and scrapes each page using BeautifulSoup. Strips out all the noise (scripts, styles, navigation) and pulls out clean text to find company names, websites, and decision-maker details.
+
+**Step 3 — Scorer Chain**
+Takes the combined research from Steps 1 and 2 and scores each lead against the ICP on a scale of 1-10. Uses a Pydantic model to force the LLM to return structured data — instead of a paragraph of text, you get back a clean object with specific fields like `company_name`, `relevance_score`, and `score_reason`.
+
+**Step 4 — Email Chain**
+Loops through the scored leads and writes a personalized cold email for any lead that scored 7 or above. Skips low-quality leads to save time and API calls.
+
+**Output**
+Everything gets compiled into a pandas DataFrame and saved to `leads_output.csv`.
 
 ---
 
