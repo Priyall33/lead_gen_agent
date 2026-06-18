@@ -27,7 +27,7 @@ Here's an improved version:
 
 ---
 
-The pipeline runs sequentially — each step feeds its output directly into the next via a shared `state` dictionary, so nothing gets lost between steps.
+The pipeline runs sequentially as each step feeds its output directly into the next via a shared `state` dictionary, so nothing gets lost between steps.
 
 **Step 1 — Search Agent**
 Takes the ICP and generates targeted search queries. Uses the Tavily API to run 3+ searches and return real company results with titles, URLs, and snippets. The agent decides what to search for and when it has enough results.
@@ -36,7 +36,7 @@ Takes the ICP and generates targeted search queries. Uses the Tavily API to run 
 Takes the search results from Step 1, picks the most promising URLs, and scrapes each page using BeautifulSoup. Strips out all the noise (scripts, styles, navigation) and pulls out clean text to find company names, websites, and decision-maker details.
 
 **Step 3 — Scorer Chain**
-Takes the combined research from Steps 1 and 2 and scores each lead against the ICP on a scale of 1-10. Uses a Pydantic model to force the LLM to return structured data — instead of a paragraph of text, you get back a clean object with specific fields like `company_name`, `relevance_score`, and `score_reason`.
+Takes the combined research from Steps 1 and 2 and scores each lead against the ICP on a scale of 1-10. Uses a Pydantic model to force the LLM to return structured data and instead of a paragraph of text, you get back a clean object with specific fields like `company_name`, `relevance_score`, and `score_reason`.
 
 **Step 4 — Email Chain**
 Loops through the scored leads and writes a personalized cold email for any lead that scored 7 or above. Skips low-quality leads to save time and API calls.
@@ -75,14 +75,14 @@ Everything gets compiled into a pandas DataFrame and saved to `leads_output.csv`
 
 ## Project Structure
 
-
-lead_gen_agent
-├── tools.py         # search_leads and scrape_lead_page tool definitions
-├── agents.py        # LLM setup, Lead Pydantic model, agents and chains
-├── pipeline.py      # 4-step pipeline orchestration and CSV export
-├── requirements.txt 
-├── .env             # API keys 
-└── leads_output.csv 
+lead_gen_agent/
+│
+├── tools.py          # the two tools agents can use — web search and page scraping
+├── agents.py         # LLM connection, Lead data model, search/extractor agents, scorer and email chains
+├── pipeline.py       # runs all 4 steps in order, handles state passing, exports CSV
+├── requirements.txt  # all dependencies needed to run the project
+├── .env              # API keys — never committed to GitHub
+└── leads_output.csv  # generated output file, overwritten on each run
 
 
 
