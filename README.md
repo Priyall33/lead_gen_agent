@@ -19,7 +19,7 @@ The goal is to reduce manual research time and give sales teams a ready-to-use l
 
 ---
 
-## 🏗️ Architecture and Design
+## Architecture and Design
 
 The system follows a **sequential multi-agent pipeline** with 4 steps:
 
@@ -48,7 +48,7 @@ Each step passes its results to the next via a shared state dictionary, similar 
 
 ---
 
-## ✨ Features and Functionalities
+## Features and Functionalities
 
 - **ICP-based search** — accepts industry, company size, target title, and funding stage as input
 - **Automated web search** — uses Tavily API to find real companies and decision-makers
