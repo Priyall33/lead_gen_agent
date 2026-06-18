@@ -1,6 +1,6 @@
 # Lead Generation Agent
 
-An AI multi-agent pipeline that automates lead research and outreach for sales teams. Given an Ideal Customer Profile (ICP), the system autonomously searches the web, extracts company and contact information, scores lead relevance, and drafts personalized cold emails — all exported to a CSV file.
+An AI multi-agent pipeline that automates lead research and outreach for sales teams. Given an Ideal Customer Profile (ICP), the system autonomously searches the web, extracts company and contact information, scores lead relevance, and drafts personalized cold emails which are all all exported to a CSV file.
 
 ---
 
