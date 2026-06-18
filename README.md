@@ -23,10 +23,6 @@ The goal is to reduce manual research time and give sales teams a ready-to-use l
 
 The system follows a **sequential multi-agent pipeline** with 4 steps:
 
-Here's an improved version:
-
----
-
 The pipeline runs sequentially as each step feeds its output directly into the next via a shared `state` dictionary, so nothing gets lost between steps.
 
 **Step 1 — Search Agent**
