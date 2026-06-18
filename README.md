@@ -71,6 +71,7 @@ Everything gets compiled into a pandas DataFrame and saved to `leads_output.csv`
 
 ## Project Structure
 
+```
 lead_gen_agent/
 │
 ├── tools.py          # the two tools agents can use — web search and page scraping
@@ -79,6 +80,7 @@ lead_gen_agent/
 ├── requirements.txt  # all dependencies needed to run the project
 ├── .env              # API keys — never committed to GitHub
 └── leads_output.csv  # generated output file, overwritten on each run
+```
 
 
 
